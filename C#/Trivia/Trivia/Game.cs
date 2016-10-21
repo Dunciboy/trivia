@@ -77,7 +77,8 @@ namespace UglyTrivia
 
                     Console.WriteLine(lPlayers[iCurrentPlayer] + " is getting out of the penalty box");
                     iPlaces[iCurrentPlayer] = iPlaces[iCurrentPlayer] + roll;
-                    if (iPlaces[iCurrentPlayer] > 11) iPlaces[iCurrentPlayer] = iPlaces[iCurrentPlayer] - 12;
+                    if (iPlacesLimit())
+                        iPlaces[iCurrentPlayer] = iPlaces[iCurrentPlayer] - 12;
 
                     Console.WriteLine(lPlayers[iCurrentPlayer]
                             + "'s new location is "
@@ -96,7 +97,8 @@ namespace UglyTrivia
             {
 
                 iPlaces[iCurrentPlayer] = iPlaces[iCurrentPlayer] + roll;
-                if (iPlaces[iCurrentPlayer] > 11) iPlaces[iCurrentPlayer] = iPlaces[iCurrentPlayer] - 12;
+                if (iPlacesLimit())
+                    iPlaces[iCurrentPlayer] = iPlaces[iCurrentPlayer] - 12;
 
                 Console.WriteLine(lPlayers[iCurrentPlayer]
                         + "'s new location is "
@@ -105,6 +107,11 @@ namespace UglyTrivia
                 askQuestion();
             }
 
+        }
+
+        private bool iPlacesLimit()
+        {
+            return iPlaces[iCurrentPlayer] > 11;
         }
 
         private void askQuestion()
@@ -150,6 +157,7 @@ namespace UglyTrivia
         {
             if (bInPenaltyBox[iCurrentPlayer])
             {
+
                 if (bIsGettingOutOfPenaltyBox)
                 {
                     Console.WriteLine("Answer was correct!!!!");
@@ -161,14 +169,16 @@ namespace UglyTrivia
 
                     bool winner = didPlayerWin();
                     iCurrentPlayer++;
-                    if (iCurrentPlayer == lPlayers.Count) iCurrentPlayer = 0;
+                    if (reachedLastPlayer())
+                        iCurrentPlayer = 0;
 
                     return winner;
                 }
                 else
                 {
                     iCurrentPlayer++;
-                    if (iCurrentPlayer == lPlayers.Count) iCurrentPlayer = 0;
+                    if (reachedLastPlayer())
+                        iCurrentPlayer = 0;
                     return true;
                 }
 
@@ -187,10 +197,15 @@ namespace UglyTrivia
 
                 bool bWinner = didPlayerWin();
                 iCurrentPlayer++;
-                if (iCurrentPlayer == lPlayers.Count) iCurrentPlayer = 0;
+                if (reachedLastPlayer()) iCurrentPlayer = 0;
 
                 return bWinner;
             }
+        }
+
+        public bool reachedLastPlayer()
+        {
+            return iCurrentPlayer == lPlayers.Count;
         }
 
         public bool wrongAnswer()
@@ -200,7 +215,8 @@ namespace UglyTrivia
             bInPenaltyBox[iCurrentPlayer] = true;
 
             iCurrentPlayer++;
-            if (iCurrentPlayer == lPlayers.Count) iCurrentPlayer = 0;
+            if (reachedLastPlayer())
+                iCurrentPlayer = 0;
             return true;
         }
 

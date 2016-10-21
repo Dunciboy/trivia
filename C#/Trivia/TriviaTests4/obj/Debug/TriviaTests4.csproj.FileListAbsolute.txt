@@ -1,0 +1,1 @@
+C:\Users\Duncan\Documents\GitHub\trivia\C#\Trivia\TriviaTests4\obj\Debug\TriviaTests4.csprojResolveAssemblyReference.cache
