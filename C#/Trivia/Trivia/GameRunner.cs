@@ -10,7 +10,7 @@ namespace Trivia
     public class GameRunner
     {
 
-        private static bool notAWinner;
+        private static bool bNotAWinner;
 
         public static void Main(String[] args)
         {
@@ -29,16 +29,16 @@ namespace Trivia
 
                 if (rand.Next(9) == 7)
                 {
-                    notAWinner = aGame.wrongAnswer();
+                    bNotAWinner = aGame.wrongAnswer();
                 }
                 else
                 {
-                    notAWinner = aGame.wasCorrectlyAnswered();
+                    bNotAWinner = aGame.wasCorrectlyAnswered();
                 }
 
 
 
-            } while (notAWinner);
+            } while (bNotAWinner);
 
         }
 
