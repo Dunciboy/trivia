@@ -76,15 +76,7 @@ namespace UglyTrivia
                     bIsGettingOutOfPenaltyBox = true;
 
                     Console.WriteLine(lPlayers[iCurrentPlayer] + " is getting out of the penalty box");
-                    iPlaces[iCurrentPlayer] = iPlaces[iCurrentPlayer] + roll;
-                    if (iPlacesLimit())
-                        iPlaces[iCurrentPlayer] = iPlaces[iCurrentPlayer] - 12;
-
-                    Console.WriteLine(lPlayers[iCurrentPlayer]
-                            + "'s new location is "
-                            + iPlaces[iCurrentPlayer]);
-                    Console.WriteLine("The category is " + currentCategory());
-                    askQuestion();
+                    Playgame(roll);
                 }
                 else
                 {
@@ -95,18 +87,22 @@ namespace UglyTrivia
             }
             else
             {
-
-                iPlaces[iCurrentPlayer] = iPlaces[iCurrentPlayer] + roll;
-                if (iPlacesLimit())
-                    iPlaces[iCurrentPlayer] = iPlaces[iCurrentPlayer] - 12;
-
-                Console.WriteLine(lPlayers[iCurrentPlayer]
-                        + "'s new location is "
-                        + iPlaces[iCurrentPlayer]);
-                Console.WriteLine("The category is " + currentCategory());
-                askQuestion();
+                Playgame(roll);
             }
 
+        }
+
+        private void Playgame(int roll)
+        {
+            iPlaces[iCurrentPlayer] = iPlaces[iCurrentPlayer] + roll;
+            if (iPlacesLimit())
+                        iPlaces [iCurrentPlayer] = iPlaces [iCurrentPlayer] - 12;
+
+            Console.WriteLine(lPlayers [iCurrentPlayer]
+                            + "'s new location is "
+                            + iPlaces [iCurrentPlayer]);
+            Console.WriteLine("The category is " + currentCategory());
+            askQuestion();
         }
 
         private bool iPlacesLimit()
@@ -160,19 +156,7 @@ namespace UglyTrivia
 
                 if (bIsGettingOutOfPenaltyBox)
                 {
-                    Console.WriteLine("Answer was correct!!!!");
-                    iPurses[iCurrentPlayer]++;
-                    Console.WriteLine(lPlayers[iCurrentPlayer]
-                            + " now has "
-                            + iPurses[iCurrentPlayer]
-                            + " Gold Coins.");
-
-                    bool winner = didPlayerWin();
-                    iCurrentPlayer++;
-                    if (reachedLastPlayer())
-                        iCurrentPlayer = 0;
-
-                    return winner;
+                    return answerCorrect();
                 }
                 else
                 {
@@ -188,19 +172,25 @@ namespace UglyTrivia
             else
             {
 
-                Console.WriteLine("Answer was corrent!!!!");
-                iPurses[iCurrentPlayer]++;
-                Console.WriteLine(lPlayers[iCurrentPlayer]
-                        + " now has "
-                        + iPurses[iCurrentPlayer]
-                        + " Gold Coins.");
-
-                bool bWinner = didPlayerWin();
-                iCurrentPlayer++;
-                if (reachedLastPlayer()) iCurrentPlayer = 0;
-
-                return bWinner;
+                return answerCorrect();
             }
+        }
+
+        private bool answerCorrect()
+        {
+            Console.WriteLine("Answer was correct!!!!");
+            iPurses[iCurrentPlayer]++;
+            Console.WriteLine(lPlayers[iCurrentPlayer]
+                    + " now has "
+                    + iPurses[iCurrentPlayer]
+                    + " Gold Coins.");
+
+            bool winner = didPlayerWin();
+            iCurrentPlayer++;
+            if (reachedLastPlayer())
+                iCurrentPlayer = 0;
+
+            return winner;
         }
 
         public bool reachedLastPlayer()
